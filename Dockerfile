@@ -1,27 +1,27 @@
-FROM python:3.10-slim
+# 1. Use Bullseye (Full Debian) to avoid the "Short Read/EOF" network errors
+FROM python:3.10-bullseye
+
+# 2. Set necessary environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
 
 WORKDIR /app
 
-# 1. Install system dependencies
+# 3. Install minimal system tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential && rm -rf /var/lib/apt/lists/*
 
-# 2. Upgrade pip and install core dependencies
+# 4. Copy requirements first for better caching
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir setuptools wheel && \
     pip install --no-cache-dir -r requirements.txt
 
-# 3. Copy the rest of the application
+# 5. Copy your code
 COPY . .
 
-# 4. Ensure environment is recognized as a package
-RUN touch env/__init__.py
-RUN touch server/__init__.py
+# 6. Initialize your packages
+RUN touch env/__init__.py server/__init__.py
 
-# 5. Set the PYTHONPATH so the server can find 'env' and 'server'
-ENV PYTHONPATH=/app
-
-# 6. Start the server using the module flag
-# This bypasses the need for 'pip install -e .' but does the exact same thing
+# 7. Start the simulation server
 CMD ["python", "-m", "server.app"]
