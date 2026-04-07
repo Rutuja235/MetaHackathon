@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY . .
 
 # 6. Initialize your packages
-RUN touch env/__init__.py server/__init__.py
+RUN mkdir -p env server && touch env/__init__.py server/__init__.py
 
 # 7. Start the simulation server
 CMD ["python", "-m", "server.app"]
