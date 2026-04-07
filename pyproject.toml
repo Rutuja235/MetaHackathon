@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build-meta"
+
+[project]
+name = "cloudops-eval-v4"
+version = "1.0.0"
+description = "CloudOps Environment Simulator for OpenEnv"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "openenv-core",
+    "openai",
+    "requests",
+    "python-dotenv"
+]
+
+# UPDATED: Pointing to the main() function instead of the app object
+[project.scripts]
+server = "server.app:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["server*", "env*"]

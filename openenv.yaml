@@ -1,0 +1,9 @@
+name: "cloudops-v4"
+version: "1.0.0"
+entry_point: "env.main:CloudOpsEnv"
+description: "Real-world CloudOps simulation for AI agents"
+repo_url: "https://huggingface.co/spaces/your-username/cloudops-env"
+tasks:
+  - id: "full-infrastructure-deploy"
+    difficulty: "hard"
+    reward_threshold: 1.0
